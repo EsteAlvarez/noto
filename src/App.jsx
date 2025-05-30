@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import "./styles/App.css";
 import { Landing } from "./pages/Landing";
 import { Register } from "./pages/Register";
 import { Notes } from "./pages/Notes";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import '@fontsource-variable/geist-mono';
+import "./styles/App.css";
 
 function App() {
   return (
