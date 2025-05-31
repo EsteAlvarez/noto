@@ -1,7 +1,7 @@
 import { useThemeContext } from "../../context/ThemeContext";
 
 export const ScreenMode = () => {
-  const [theme, toggleTheme] = useThemeContext();
+  const { theme, toggleTheme } = useThemeContext();
 
   return (
     <div>
@@ -10,7 +10,7 @@ export const ScreenMode = () => {
           <i className="bi bi-brightness-high-fill"></i>
         </button>
       ) : (
-        <button className="cursor-pointer" onClick={toggleTheme}>
+        <button className="cursor-pointer text-[#FFFFFF]" onClick={toggleTheme}>
           <i className="bi bi-moon-fill"></i>
         </button>
       )}

@@ -1,3 +1,39 @@
 body {
-  font-family: 'Geist Mono Variable', monospace;
+  font-family: "Geist Mono Variable", monospace;
+}
+
+.light-mode-noto {
+  background-color: #ffffff;
+  opacity: 0.8;
+  background-image: radial-gradient(#111111 0.5px, #ffffff 0.5px);
+  background-size: 10px 10px;
+}
+
+.light-mode-noto .form-container-noto {
+  background-color: #ffffff;
+}
+
+.light-mode-noto p,
+.light-mode-noto h1,
+.light-mode-noto h2 {
+  color: #111111;
+}
+
+.dark-mode-noto {
+  background-color: #111111;
+  opacity: 0.8;
+  background-image: radial-gradient(#b2b2b2 0.5px, #111111 0.5px);
+  background-size: 10px 10px;
+}
+
+.dark-mode-noto .form-container-noto {
+  background-color: #111111;
+}
+
+.dark-mode-noto p,
+.dark-mode-noto h1,
+.dark-mode-noto h2,
+.dark-mode-noto form,
+.dark-mode-noto form::placeholder {
+  color: #FFFFFF;
 }
