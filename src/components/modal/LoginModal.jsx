@@ -21,7 +21,7 @@ export const LoginModal = () => {
               onClick={toggleModal}
               className="absolute top-2 right-2 text-gray-600 text-2xl cursor-pointer"
             >
-              <i class="bi bi-x"></i>
+              <i className="bi bi-x"></i>
             </button>
             <h2 className="text-[1.5625rem] mb-4 text-center">
               Iniciar sesión en <span className="text-[#F87171]">Noto</span>
