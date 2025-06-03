@@ -9,6 +9,7 @@ export * from "./modal/LoginModal";
 
 /* Notes */
 export * from "./notes/Note";
+export * from "./notes/Spinner";
 
 /* ScrrenMode */
 export * from "./screenmode/ScreenMode";

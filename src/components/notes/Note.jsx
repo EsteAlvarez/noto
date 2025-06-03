@@ -1,10 +1,32 @@
 import { useRef, useState, useEffect } from "react";
-import { setNewOffset, autoGrow, setZIndex } from "../../utils/utils";
+import { db } from "../../client/databases";
+import {
+  setNewOffset,
+  autoGrow,
+  setZIndex,
+  bodyParser,
+} from "../../utils/utils";
+import { Spinner } from "./Spinner";
 
 export const Note = ({ note }) => {
+  const body = bodyParser(note.body);
   const [position, setPosition] = useState(JSON.parse(note.position));
-  const colors = JSON.parse(note.colors);
-  const body = JSON.parse(note.body);
+  const [saving, setSaving] = useState(false);
+  const colors = JSON.parse(note.color);
+
+  const keyUpTimer = useRef(null);
+
+  const handleKeyUp = async () => {
+    setSaving(true);
+
+    if (keyUpTimer.current) {
+      clearTimeout(keyUpTimer.current);
+    }
+
+    keyUpTimer.current = setTimeout(() => {
+      saveData("body", textAreaRef.current.value);
+    }, 2000);
+  };
 
   let mouseStartPos = { x: 0, y: 0 };
   const cardRef = useRef(null);
@@ -21,6 +43,19 @@ export const Note = ({ note }) => {
   const mouseUp = () => {
     document.removeEventListener("mousemove", mouseMove);
     document.removeEventListener("mouseup", mouseUp);
+
+    const newPosition = setNewOffset(cardRef.current); //{x,y}
+    saveData("position", newPosition);
+  };
+
+  const saveData = async (key, value) => {
+    const payload = { [key]: JSON.stringify(value) };
+    try {
+      await db.notes.update(note.$id, payload);
+    } catch (error) {
+      console.error(error);
+    }
+    setSaving(false);
   };
 
   const mouseMove = (e) => {
@@ -58,6 +93,12 @@ export const Note = ({ note }) => {
         style={{ backgroundColor: colors.colorHeader }}
       >
         <i className="bi bi-trash"></i>
+        {saving && (
+          <div className="card-saving">
+            <Spinner color={colors.colorText} />
+            <span style={{ color: colors.colorText }}>Guardando...</span>
+          </div>
+        )}
       </div>
       <div className="card-body">
         <textarea
@@ -68,6 +109,7 @@ export const Note = ({ note }) => {
           onFocus={() => {
             setZIndex(cardRef.current);
           }}
+          onKeyUp={handleKeyUp}
           style={{ color: colors.colorText }}
           defaultValue={body}
         ></textarea>
