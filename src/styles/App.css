@@ -104,3 +104,44 @@ textarea:focus {
   align-items: center;
   gap: 5px;
 }
+
+#controls {
+  display: flex;
+  flex-direction: row; /* horizontal como un dock */
+  gap: 1em;
+  align-items: center;
+  position: fixed;
+  bottom: 1em;
+  left: 50%;
+  transform: translateX(-50%); /* centrar horizontalmente */
+  background-color: #b5b5b5;
+  padding: 1em;
+  border-radius: 5px;
+
+  box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+    0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+    0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+  z-index: 10000;
+}
+
+#add-btn {
+  background-color: rgba(107, 107, 107, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.color {
+  background-color: grey;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
