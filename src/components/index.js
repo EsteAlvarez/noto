@@ -7,5 +7,8 @@ export * from "./layout/Layout";
 /* Modal */
 export * from "./modal/LoginModal";
 
-/* ScrrenMode */
+/* ScreenMode */
 export * from "./screenmode/ScreenMode";
+
+/* Task */
+export * from "./task/Task";

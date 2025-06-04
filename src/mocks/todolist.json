@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "body": "Comprar leche en el supermercado",
+    "status": "pending"
+  },
+  {
+    "id": "2",
+    "body": "Enviar el informe mensual al equipo",
+    "status": "completed"
+  },
+  {
+    "id": "3",
+    "body": "Agendar cita con el dentista",
+    "status": "pending"
+  },
+  {
+    "id": "4",
+    "body": "Leer 30 minutos del libro actual",
+    "status": "completed"
+  },
+  {
+    "id": "5",
+    "body": "Hacer ejercicio por 20 minutos",
+    "status": "pending"
+  },
+  {
+    "id": "6",
+    "body": "Responder correos importantes",
+    "status": "pending"
+  },
+  {
+    "id": "7",
+    "body": "Llamar a mamá",
+    "status": "completed"
+  }
+]

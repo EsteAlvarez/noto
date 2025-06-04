@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 
 export const Landing = () => {
   const { user } = useAuthContext();
-  console.log(user);
+  
   return (
     <Layout>
       <h1 className="text-[3.8125rem]">Ordena</h1>
