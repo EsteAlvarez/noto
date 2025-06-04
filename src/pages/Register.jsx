@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout, InputLabel } from "../components";
 import { useAuthContext } from "../context/AuthContext";
 
@@ -7,11 +7,22 @@ export const Register = () => {
   const [registerName, setRegisterName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
-  const { registerUser } = useAuthContext();
+  const { user, registerUser } = useAuthContext();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    registerUser(registerEmail, registerPassword, registerName);
+    try {
+      await registerUser(registerEmail, registerPassword, registerName);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
