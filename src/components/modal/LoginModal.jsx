@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { InputLabel } from "../form/InputLabel";
+import { useAuthContext } from "../../context/AuthContext";
 
 export const LoginModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const { loginUser } = useAuthContext();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser(loginEmail, loginPassword);
+  };
 
   const toggleModal = () => setIsOpen(!isOpen);
   return (
@@ -26,13 +35,14 @@ export const LoginModal = () => {
             <h2 className="text-[1.5625rem] mb-4 text-center">
               Iniciar sesión en <span className="text-[#F87171]">Noto</span>
             </h2>
-            <form className="flex flex-col gap-5 mt-8">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
               <InputLabel
                 label="Email:"
                 type="email"
                 id="email"
                 name="email"
                 placeholder="Ingrese su email"
+                onChange={(e) => setLoginEmail(e.target.value)}
               />
               <InputLabel
                 label="Contraseña:"
@@ -40,6 +50,7 @@ export const LoginModal = () => {
                 id="password"
                 name="password"
                 placeholder="Ingrese su contraseña"
+                onChange={(e) => setLoginPassword(e.target.value)}
               />
               <button
                 type="submit"
