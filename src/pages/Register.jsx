@@ -1,32 +1,46 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout, InputLabel } from "../components";
+import { useAuthContext } from "../context/AuthContext";
 
 export const Register = () => {
+  const [registerName, setRegisterName] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const { registerUser } = useAuthContext();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    registerUser(registerEmail, registerPassword, registerName);
+  };
+
   return (
     <Layout>
       <Link to={"/"}>
         <p>
-          <i class="bi bi-arrow-left-short"></i> Volver al inicio
+          <i className="bi bi-arrow-left-short"></i> Volver al inicio
         </p>
       </Link>
       <div className="form-container-noto min-w-[30%] rounded-[5px] shadow-lg p-5">
         <h1 className="text-[1.5625rem]">
           Regístrate en <span className="text-[#F87171]">Noto</span>
         </h1>
-        <form className="flex flex-col gap-5 mt-8">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
           <InputLabel
             label="Nombre:"
             type="text"
             id="name"
             name="name"
             placeholder="Ingrese su nombre"
+            onChange={(e) => setRegisterName(e.target.value)}
           />
           <InputLabel
             label="Email:"
             type="email"
             id="email"
-            name="name"
+            name="email"
             placeholder="Ingrese su email"
+            onChange={(e) => setRegisterEmail(e.target.value)}
           />
           <InputLabel
             label="Contraseña:"
@@ -34,8 +48,12 @@ export const Register = () => {
             id="password"
             name="password"
             placeholder="Cree una contraseña"
+            onChange={(e) => setRegisterPassword(e.target.value)}
           />
-          <button className="bg-[#F87171] text-[#fff] p-2 rounded-[5px] cursor-pointer">
+          <button
+            type="submit"
+            className="bg-[#F87171] text-[#fff] p-2 rounded-[5px] cursor-pointer"
+          >
             Crear Cuenta
           </button>
         </form>

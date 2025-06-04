@@ -1,4 +1,4 @@
-export const InputLabel = ({ label, type, id, name, placeholder }) => {
+export const InputLabel = ({ label, type, id, name, placeholder, onChange }) => {
   return (
     <label className="flex flex-col text-start gap-1" htmlFor={id}>
       {label}
@@ -8,6 +8,7 @@ export const InputLabel = ({ label, type, id, name, placeholder }) => {
         id={id}
         name={name}
         placeholder={placeholder}
+        onChange={onChange}
         required
       />
     </label>
