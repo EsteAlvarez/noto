@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { Databases, ID, Query } from "appwrite";
 import { databases, account } from "../client/appwrite";
+import { useAuthContext } from "./AuthContext";
 
 export const NotesContext = createContext();
 
@@ -10,6 +11,15 @@ export const useNotesContext = () => {
 
 export const NotesContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      getUserTasks();
+    } else {
+      setTasks([]);
+    }
+  }, [user]);
 
   const getUserTasks = async () => {
     try {
@@ -39,8 +49,8 @@ export const NotesContextProvider = ({ children }) => {
           body,
           status,
           userId: user.$id,
-        },
-        [`user:${user.$id}`]
+        }
+        // [`user:${user.$id}`]
       );
 
       await getUserTasks();
@@ -93,7 +103,7 @@ export const NotesContextProvider = ({ children }) => {
 
   return (
     <NotesContext.Provider
-      value={{ tasks, createTask, updateTaskStatus, deleteTask }}
+      value={{ tasks, setTasks, createTask, updateTaskStatus, deleteTask }}
     >
       {children}
     </NotesContext.Provider>
