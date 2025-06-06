@@ -7,7 +7,9 @@ export const Register = () => {
   const [registerName, setRegisterName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
-  const { user, registerUser } = useAuthContext();
+  const [errorStatus, setErrorStatus] = useState("");
+  const [successStatus, setSuccessStatus] = useState("");
+  const { user, registerUser, loginUser } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,12 +18,38 @@ export const Register = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    setErrorStatus("");
+  }, [registerName, registerEmail, registerPassword]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await registerUser(registerEmail, registerPassword, registerName);
-    } catch (err) {
-      console.error(err);
+
+    if (!registerName || !registerEmail || !registerPassword) {
+      setErrorStatus("Todos los campos son obligatorios.");
+      return;
+    }
+
+    if (registerPassword.length < 8) {
+      setErrorStatus("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+
+    const result = await registerUser(
+      registerEmail,
+      registerPassword,
+      registerName
+    );
+
+    if (!result.success) {
+      setErrorStatus("El email registrado ya dispone de una cuenta en ordena");
+      return;
+    } else {
+      setSuccessStatus("Usuario registrado con éxito");
+      await loginUser(registerEmail, registerPassword);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     }
   };
 
@@ -58,9 +86,20 @@ export const Register = () => {
             type="password"
             id="password"
             name="password"
-            placeholder="Cree una contraseña"
+            placeholder="Cree una contraseña (mínimo 8 caracteres)"
             onChange={(e) => setRegisterPassword(e.target.value)}
+            min={8}
           />
+          {errorStatus && (
+            <span className="text-[0.875rem] m-0 text-start text-wrap text-[#F87171]">
+              {errorStatus}
+            </span>
+          )}
+          {successStatus && (
+            <span className="text-[0.875rem] m-0 text-start text-wrap text-emerald-500">
+              {successStatus}
+            </span>
+          )}
           <button
             type="submit"
             className="bg-[#F87171] text-[#fff] p-2 rounded-[5px] cursor-pointer"

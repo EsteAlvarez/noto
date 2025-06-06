@@ -10,7 +10,7 @@ export const Task = ({
   deleteLoading,
 }) => {
   return (
-    <div className="flex items-center gap-4 shadow-lg my-3 rounded-[5px] p-2 task-screen-mode">
+    <div className="flex items-center gap-4 shadow-lg my-3 rounded-[5px] px-2 py-4 task-screen-mode">
       {updateLoading ? (
         <TaskStatus>
           {status === "pending" ? "Completando" : "Restaurando"}
@@ -30,7 +30,7 @@ export const Task = ({
       >
         {body}
       </p>
-      <div>
+      <div className="min-w-[90px] flex justify-end">
         {deleteLoading ? (
           <TaskStatus>Eliminando</TaskStatus>
         ) : (

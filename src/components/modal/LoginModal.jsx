@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { InputLabel } from "../form/InputLabel";
 import { useAuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export const LoginModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { loginUser } = useAuthContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loginUser(loginEmail, loginPassword);
+    const result = await loginUser(loginEmail, loginPassword);
+
+    if (!result.success) {
+      setErrorMessage("Email o contraseña incorrectos");
+    } else {
+      setErrorMessage("");
+    }
   };
 
   const toggleModal = () => setIsOpen(!isOpen);
@@ -52,6 +60,7 @@ export const LoginModal = () => {
                 placeholder="Ingrese su contraseña"
                 onChange={(e) => setLoginPassword(e.target.value)}
               />
+              <span className="text-[#F87171]">{errorMessage}</span>
               <button
                 type="submit"
                 className="bg-[#F87171] text-[#fff] p-2 rounded-[5px] cursor-pointer"

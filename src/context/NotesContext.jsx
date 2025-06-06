@@ -11,6 +11,7 @@ export const useNotesContext = () => {
 
 export const NotesContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [loadingTasks, setLoadingTasks] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -25,6 +26,7 @@ export const NotesContextProvider = ({ children }) => {
   }, [user]);
 
   const getUserTasks = async () => {
+    setLoadingTasks(true);
     try {
       const user = await account.get();
 
@@ -38,6 +40,8 @@ export const NotesContextProvider = ({ children }) => {
     } catch (err) {
       console.error("Error al obtener tareas:", err);
       throw err;
+    } finally {
+      setLoadingTasks(false);
     }
   };
 
@@ -117,6 +121,7 @@ export const NotesContextProvider = ({ children }) => {
     <NotesContext.Provider
       value={{
         tasks,
+        loadingTasks,
         addLoading,
         deleteLoading,
         updateLoading,

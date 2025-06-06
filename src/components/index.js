@@ -10,6 +10,9 @@ export * from "./modal/LoginModal";
 /* ScreenMode */
 export * from "./screenmode/ScreenMode";
 
+/* Status */
+export * from "./status/GlobalStatus";
+
 /* Task */
 export * from "./task/Task";
 export * from "./task/CreateTask";

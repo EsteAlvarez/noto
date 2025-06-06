@@ -39,7 +39,7 @@ export const CreateTask = () => {
           placeholder="Escribe una tarea"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
-          maxlength="500"
+          maxLength="500"
         ></textarea>
         <div className="flex items-center gap-4">
           <button

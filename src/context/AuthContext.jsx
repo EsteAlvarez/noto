@@ -9,13 +9,18 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingUser, setloadingUser] = useState(true);
 
   const registerUser = async (email, password, name) => {
     try {
-      const response = await account.create("unique()", email, password, name);
+      await account.create("unique()", email, password, name);
+      return { success: true };
     } catch (err) {
       console.error(err);
+      return {
+        success: false,
+        message: err.message || "Error al registrar usuario",
+      };
     }
   };
 
@@ -27,9 +32,12 @@ export const AuthContextProvider = ({ children }) => {
       );
       const userData = await account.get();
       setUser(userData);
-      console.log("Usuario logeado" + userData);
+      return { success: true };
     } catch (err) {
-      console.error(err);
+      return {
+        success: false,
+        message: err.message || "Error al iniciar sesión",
+      };
     }
   };
 
@@ -50,7 +58,7 @@ export const AuthContextProvider = ({ children }) => {
       setUser(null);
       console.error(err);
     } finally {
-      setLoading(false);
+      setloadingUser(false);
     }
   };
 
@@ -60,7 +68,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ registerUser, loginUser, logoutUser, loading, user }}
+      value={{ registerUser, loginUser, logoutUser, loadingUser, user }}
     >
       {children}
     </AuthContext.Provider>
