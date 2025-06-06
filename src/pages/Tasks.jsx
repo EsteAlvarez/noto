@@ -6,6 +6,8 @@ import { useAuthContext } from "../context/AuthContext";
 import { useNotesContext } from "../context/NotesContext";
 
 export const Tasks = () => {
+  const [deletingTaskId, setDeletingTaskId] = useState(null);
+  const [updatingTaskId, setupdatingTaskId] = useState(null);
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const { tasks, deleteTask, updateTaskStatus } = useNotesContext();
@@ -20,17 +22,23 @@ export const Tasks = () => {
     const newStatus = currentStatus === "pending" ? "completed" : "pending";
 
     try {
+      setupdatingTaskId(id);
       await updateTaskStatus(id, newStatus);
     } catch (err) {
       console.error(err);
+    } finally {
+      setupdatingTaskId(null);
     }
   };
 
   const deleteTaskButton = async (id) => {
     try {
+      setDeletingTaskId(id);
       await deleteTask(id);
     } catch (err) {
       console.error(err);
+    } finally {
+      setDeletingTaskId(null);
     }
   };
 
@@ -59,6 +67,8 @@ export const Tasks = () => {
                 {...task}
                 onToggle={() => toggleTaskStatus(task.$id, task.status)}
                 deleteTask={deleteTaskButton}
+                updateLoading={updatingTaskId === task.$id}
+                deleteLoading={deletingTaskId === task.$id}
               />
             ))
           ) : (
@@ -81,6 +91,8 @@ export const Tasks = () => {
                 {...task}
                 onToggle={() => toggleTaskStatus(task.$id, task.status)}
                 deleteTask={deleteTaskButton}
+                updateLoading={updatingTaskId === task.$id}
+                deleteLoading={deletingTaskId === task.$id}
               />
             ))
           ) : (

@@ -11,6 +11,9 @@ export const useNotesContext = () => {
 
 export const NotesContextProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [addLoading, setAddLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -39,6 +42,7 @@ export const NotesContextProvider = ({ children }) => {
   };
 
   const createTask = async (body, status = "pending") => {
+    setAddLoading(true);
     try {
       const user = await account.get();
       const response = await databases.createDocument(
@@ -57,10 +61,13 @@ export const NotesContextProvider = ({ children }) => {
       return response;
     } catch (err) {
       console.error(err);
+    } finally {
+      setAddLoading(false);
     }
   };
 
   const updateTaskStatus = async (taskId, status) => {
+    setUpdateLoading(true);
     try {
       const response = await databases.updateDocument(
         import.meta.env.VITE_DATABASE_ID,
@@ -76,10 +83,13 @@ export const NotesContextProvider = ({ children }) => {
     } catch (err) {
       console.error("Error al actualizar tarea:", err);
       throw err;
+    } finally {
+      setUpdateLoading(false);
     }
   };
 
   const deleteTask = async (taskId) => {
+    setDeleteLoading(true);
     try {
       await databases.deleteDocument(
         import.meta.env.VITE_DATABASE_ID,
@@ -91,6 +101,8 @@ export const NotesContextProvider = ({ children }) => {
     } catch (err) {
       console.error("Error al eliminar tarea:", err);
       throw err;
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -103,7 +115,16 @@ export const NotesContextProvider = ({ children }) => {
 
   return (
     <NotesContext.Provider
-      value={{ tasks, setTasks, createTask, updateTaskStatus, deleteTask }}
+      value={{
+        tasks,
+        addLoading,
+        deleteLoading,
+        updateLoading,
+        setTasks,
+        createTask,
+        updateTaskStatus,
+        deleteTask,
+      }}
     >
       {children}
     </NotesContext.Provider>

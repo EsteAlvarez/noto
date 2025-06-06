@@ -13,3 +13,4 @@ export * from "./screenmode/ScreenMode";
 /* Task */
 export * from "./task/Task";
 export * from "./task/CreateTask";
+export * from "./task/TaskStatus";
