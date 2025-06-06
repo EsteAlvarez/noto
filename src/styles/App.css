@@ -1,7 +1,3 @@
-:root {
-  --spinner-animation-speed: 2s;
-}
-
 body {
   font-family: "Geist Mono Variable", monospace;
 }
@@ -14,15 +10,23 @@ body {
 }
 
 .light-mode-noto .form-container-noto,
-.light-mode-noto .modal {
+.light-mode-noto .modal,
+.light-mode-noto .task-screen-mode,
+.light-mode-noto .add-task-textarea {
   background-color: #ffffff;
+}
+
+.light-mode-noto .add-task-textarea {
+  background-color: #ffffff;
+  border: 1px solid gray;
 }
 
 .light-mode-noto p,
 .light-mode-noto h1,
 .light-mode-noto h2,
 .light-mode-noto .modal,
-.light-mode-noto .logout-text {
+.light-mode-noto .logout-text,
+.light-mode-noto .screen-mode-icon {
   color: #111111;
 }
 
@@ -38,12 +42,34 @@ body {
   background-color: #111111;
 }
 
+.dark-mode-noto .task-screen-mode,
+.dark-mode-noto .add-task-textarea {
+  background-color: #000;
+}
+
 .dark-mode-noto p,
 .dark-mode-noto h1,
 .dark-mode-noto h2,
 .dark-mode-noto form,
 .dark-mode-noto form::placeholder,
 .dark-mode-noto .modal,
-.dark-mode-noto .logout-text {
+.dark-mode-noto .logout-text,
+.dark-mode-noto .screen-mode-icon {
   color: #ffffff;
+}
+
+.checkbox-task {
+  appearance: none;
+}
+
+.checkbox-task {
+  background-color: #FFFFFF;
+  width: 15px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 2px solid gray;
+}
+
+.checkbox-task:checked {
+  background-color: #f87171;
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Task, CreateTask } from "../components";
-// import todoData from "../mocks/todolist.json";
 import { useAuthContext } from "../context/AuthContext";
 import { useNotesContext } from "../context/NotesContext";
 
@@ -57,7 +56,7 @@ export const Tasks = () => {
         {/* Pendientes */}
         <div className="text-start text-[1.5625rem] mb-10">
           <div className="flex items-center gap-3 mb-2 font-semibold">
-            <i className="bi bi-clock"></i>
+            <i className="bi bi-clock screen-mode-icon"></i>
             <h2>Tareas Pendientes</h2>
           </div>
           {pendingTasks.length > 0 ? (
@@ -81,7 +80,7 @@ export const Tasks = () => {
         {/* Completadas */}
         <div className="text-start text-[1.5625rem]">
           <div className="flex items-center gap-3 mb-2 font-semibold">
-            <i className="bi bi-check-circle"></i>
+            <i className="bi bi-check-circle screen-mode-icon"></i>
             <h2>Tareas Finalizadas</h2>
           </div>
           {completedTasks.length > 0 ? (

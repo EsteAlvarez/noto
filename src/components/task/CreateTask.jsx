@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNotesContext } from "../../context/NotesContext";
 import { TaskStatus } from "./TaskStatus";
 
 export const CreateTask = () => {
   const [newTask, setNewTask] = useState("");
   const { addLoading, createTask } = useNotesContext();
+  const textAreaRef = useRef(null);
+
+  const handleInput = () => {
+    const textArea = textAreaRef.current;
+    textArea.style.height = "auto";
+    textArea.style.height = textArea.scrollHeight + "px";
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,14 +27,19 @@ export const CreateTask = () => {
   return (
     <div className="mb-10">
       <form onSubmit={handleSubmit} className="flex flex-col text-start">
-        <label htmlFor="task">Añadir Tarea</label>
+        <label className="mb-1" htmlFor="task">
+          Añadir Tarea
+        </label>
         <textarea
-          className="border rounded-[5px] p-3 bg-[#FFF]"
+          ref={textAreaRef}
+          onInput={handleInput}
+          className="rounded-[5px] p-3 add-task-textarea"
           name="task"
           id="task"
           placeholder="Escribe una tarea"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
+          maxlength="500"
         ></textarea>
         <div className="flex items-center gap-4">
           <button
