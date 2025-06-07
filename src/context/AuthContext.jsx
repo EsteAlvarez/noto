@@ -9,9 +9,12 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loadingLoginUser, setLoadingLoginUser] = useState(false);
+  const [loadingRegisterUser, setLoadingRegisterUser] = useState(false);
   const [loadingUser, setloadingUser] = useState(true);
 
   const registerUser = async (email, password, name) => {
+    setLoadingRegisterUser(true);
     try {
       await account.create("unique()", email, password, name);
       return { success: true };
@@ -21,10 +24,13 @@ export const AuthContextProvider = ({ children }) => {
         success: false,
         message: err.message || "Error al registrar usuario",
       };
+    } finally {
+      setLoadingRegisterUser(false);
     }
   };
 
   const loginUser = async (email, password) => {
+    setLoadingLoginUser(true);
     try {
       const response = await account.createEmailPasswordSession(
         email,
@@ -38,6 +44,8 @@ export const AuthContextProvider = ({ children }) => {
         success: false,
         message: err.message || "Error al iniciar sesión",
       };
+    } finally {
+      setLoadingLoginUser(false);
     }
   };
 
@@ -68,7 +76,15 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ registerUser, loginUser, logoutUser, loadingUser, user }}
+      value={{
+        registerUser,
+        loginUser,
+        logoutUser,
+        loadingUser,
+        loadingLoginUser,
+        loadingRegisterUser,
+        user,
+      }}
     >
       {children}
     </AuthContext.Provider>

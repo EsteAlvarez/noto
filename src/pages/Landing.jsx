@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Layout, LoginModal } from "../components";
+import { Layout, LoginModal, Preloader } from "../components";
 import { useAuthContext } from "../context/AuthContext";
 
 export const Landing = () => {
@@ -8,7 +8,7 @@ export const Landing = () => {
   if (loadingUser) {
     return (
       <Layout>
-        <p className="text-center"><i className="bi bi-arrow-repeat text-[3rem] animate-spin"></i></p>
+        <Preloader />
       </Layout>
     );
   }

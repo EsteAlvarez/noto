@@ -63,7 +63,7 @@ body {
 }
 
 .checkbox-task {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 15px;
   aspect-ratio: 1/1;
   border-radius: 50%;
@@ -72,4 +72,24 @@ body {
 
 .checkbox-task:checked {
   background-color: #f87171;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid gray;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

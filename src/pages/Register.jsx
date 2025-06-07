@@ -9,7 +9,8 @@ export const Register = () => {
   const [registerPassword, setRegisterPassword] = useState("");
   const [errorStatus, setErrorStatus] = useState("");
   const [successStatus, setSuccessStatus] = useState("");
-  const { user, registerUser, loginUser } = useAuthContext();
+  const { user, registerUser, loginUser, loadingRegisterUser } =
+    useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export const Register = () => {
       await loginUser(registerEmail, registerPassword);
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 3000);
     }
   };
 
@@ -105,6 +106,9 @@ export const Register = () => {
             className="bg-[#F87171] text-[#fff] p-2 rounded-[5px] cursor-pointer"
           >
             Crear Cuenta
+            {loadingRegisterUser && (
+              <i className="bi bi-arrow-repeat text-[0.875rem] animate-spin inline-block ml-2"></i>
+            )}
           </button>
         </form>
         <p className="mt-8">
