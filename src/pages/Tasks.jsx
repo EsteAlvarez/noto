@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout, Task, CreateTask, TaskStatus } from "../components";
 import { useAuthContext } from "../context/AuthContext";
 import { useNotesContext } from "../context/NotesContext";
+import { AnimatePresence } from "motion/react";
 
 export const Tasks = () => {
   const [deletingTaskId, setDeletingTaskId] = useState(null);
@@ -54,16 +55,18 @@ export const Tasks = () => {
         <h2>{title}</h2>
       </div>
       {tasksList.length > 0 ? (
-        tasksList.map((task) => (
-          <Task
-            key={task.$id}
-            {...task}
-            onToggle={() => toggleTaskStatus(task.$id, task.status)}
-            deleteTask={deleteTaskButton}
-            updateLoading={updatingTaskId === task.$id}
-            deleteLoading={deletingTaskId === task.$id}
-          />
-        ))
+        <AnimatePresence mode="popLayout">
+          {tasksList.map((task) => (
+            <Task
+              key={task.$id}
+              {...task}
+              onToggle={() => toggleTaskStatus(task.$id, task.status)}
+              deleteTask={deleteTaskButton}
+              updateLoading={updatingTaskId === task.$id}
+              deleteLoading={deletingTaskId === task.$id}
+            />
+          ))}
+        </AnimatePresence>
       ) : (
         <p className="text-[1rem] text-gray-500">{emptyMessage}</p>
       )}

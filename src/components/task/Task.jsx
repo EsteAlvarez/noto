@@ -1,4 +1,5 @@
 import { TaskStatus } from "./TaskStatus";
+import { motion } from "motion/react";
 
 export const Task = ({
   $id,
@@ -10,7 +11,14 @@ export const Task = ({
   deleteLoading,
 }) => {
   return (
-    <div className="flex items-center gap-4 shadow-lg my-3 rounded-[5px] px-2 py-4 task-screen-mode">
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }} // Solo desvanecer
+      transition={{ duration: 0.4 }}
+      className="flex items-center gap-4 shadow-lg my-3 rounded-[5px] px-2 py-4 task-screen-mode"
+    >
       {updateLoading ? (
         <TaskStatus>
           {status === "pending" ? "Completando" : "Restaurando"}
@@ -43,6 +51,6 @@ export const Task = ({
           </button>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
