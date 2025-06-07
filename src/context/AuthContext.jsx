@@ -72,6 +72,7 @@ export const AuthContextProvider = ({ children }) => {
     fetchCurrentUser();
   }, []);
 
+  
   return (
     <AuthContext.Provider
       value={{
