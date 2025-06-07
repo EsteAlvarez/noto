@@ -1,11 +1,11 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Landing, Register, Tasks, NotFoundPage } from "./pages";
-import "@fontsource-variable/geist-mono";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { ThemeContextProvider } from "./context/ThemeContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import { NotesContextProvider } from "./context/NotesContext";
 import { AnimatePresence } from "motion/react";
+import "@fontsource-variable/geist-mono";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "./styles/App.css";
 
 function App() {
