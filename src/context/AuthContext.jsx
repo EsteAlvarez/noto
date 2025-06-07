@@ -3,9 +3,7 @@ import { account } from "../client/appwrite";
 
 export const AuthContext = createContext();
 
-export const useAuthContext = () => {
-  return useContext(AuthContext);
-};
+export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -32,10 +30,7 @@ export const AuthContextProvider = ({ children }) => {
   const loginUser = async (email, password) => {
     setLoadingLoginUser(true);
     try {
-      const response = await account.createEmailPasswordSession(
-        email,
-        password
-      );
+      await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
       setUser(userData);
       return { success: true };
@@ -54,7 +49,7 @@ export const AuthContextProvider = ({ children }) => {
       await account.deleteSession("current");
       setUser(null);
     } catch (err) {
-      console.error(err);
+      console.error("Error al cerrar sesión:", err);
     }
   };
 
@@ -63,8 +58,11 @@ export const AuthContextProvider = ({ children }) => {
       const userData = await account.get();
       setUser(userData);
     } catch (err) {
-      setUser(null);
-      console.error(err);
+      if (err.code === 401) {
+        setUser(null);
+      } else {
+        console.error("Error al obtener el usuario:", err);
+      }
     } finally {
       setloadingUser(false);
     }
